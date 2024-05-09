@@ -30,19 +30,21 @@ ps1=0
 
 
 # Find the closest contour to the selected point
-def cont(ps, j, point, C):
-
+def cont(ps, ims, point, C):
+    point = (int(point[0]), int(point[1]))  # Ensure coordinates are integers
     nonzero = cv2.findNonZero(ps)
     distances = np.sqrt((nonzero[:,:,0] - point[1]) ** 2 + (nonzero[:,:,1] - point[0]) ** 2)
     nearest_index = np.argmin(distances)
     x, y = nonzero[nearest_index][0]
-    
-    cont,_ = cv2.findContours(ps, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    cont, _ = cv2.findContours(ps, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     for c in cont:
-        if (cv2.pointPolygonTest(c,(x, y),True)>=0):
-            cv2.drawContours(j, c, -1, (255, 255, 255), 4)
+        if cv2.pointPolygonTest(c, (int(x), int(y)), False) >= 0:
+            cv2.drawContours(ims, c, -1, (255, 255, 255), 4)
             cv2.drawContours(C, c, -1, (255, 255, 255), 1)
             return c
+
+
 
 # Draws and returns the selected contour
 def draw_c(event,x,y,flags,param):
@@ -190,5 +192,3 @@ def select(img):
 
 
     return C_parts_selected, d
-
-

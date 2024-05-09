@@ -16,8 +16,7 @@ import math
 import diameter_calc
 
 
-img = cv2.imread("PATH")
-
+img = cv2.imread("C:\\Users\\zunay\\OneDrive\\Desktop\\499_project\\Retinal-vessel-segmentation-and-vessel-diameter-estimation\\Images\\image.png")
 
 
 diameter_calc.diameter(img)
